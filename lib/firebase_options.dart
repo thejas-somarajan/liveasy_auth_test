@@ -50,16 +50,16 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyC0PCKwGbkF0SO3ADZfOGeIpnS5ZpRxAhU',
-    appId: '1:674890474657:android:de2f667c326720ac07fce0',
+    apiKey: 'API KEY',
+    appId: 'API ID',
     messagingSenderId: '674890474657',
     projectId: 'liveasy-test',
     storageBucket: 'liveasy-test.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyCOdOkZHplJ0rzpqDxvOKvJ23geTkNoBZ0',
-    appId: '1:674890474657:ios:603d46a8e3d3f4c907fce0',
+    apiKey: 'API KEY',
+    appId: 'API ID',
     messagingSenderId: '674890474657',
     projectId: 'liveasy-test',
     storageBucket: 'liveasy-test.appspot.com',
