@@ -23,16 +23,6 @@ Users enter the OTP received on their phone to verify their identity.
 ### Profile Selection
 Users select their profile type (Shipper or Transporter) with relevant information.
 
-
-###Dependencies
-
-firebase_auth: For Firebase Authentication.
-provider: For state management.
-flutter_gen: For generating localization code.
-country_picker: For selecting country codes.
-timer_count_down: For countdown timer in OTP verification.
-pinput: For pin input fields.
-
 ###Concerns
 Emulator: Pixel 6 Pro
 Firebase app removed after submission from firebase console for security purposes
