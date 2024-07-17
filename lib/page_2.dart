@@ -56,7 +56,7 @@ class _PhoneNoState extends State<PhoneNo> {
               Provider.of<LocaleProvider>(context, listen: false).locale,),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
-                  return Center(child: CircularProgressIndicator());
+                  return const Center(child: CircularProgressIndicator());
                 } else if (snapshot.hasError) {
                   return Center(child: Text('Error: ${snapshot.error}'));
                 } else {
@@ -94,7 +94,7 @@ class _PhoneNoState extends State<PhoneNo> {
                                 children: [
                                 Text(
                                   localizations.phonenumberText,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     fontSize: 23,
                                     fontWeight: FontWeight.w800,
                                   ),
@@ -104,7 +104,7 @@ class _PhoneNoState extends State<PhoneNo> {
                                   padding: const EdgeInsets.symmetric(horizontal: 50),
                                   child:Text(
                                     localizations.phonenumberInfo,
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       fontSize: 18,
                                       fontWeight: FontWeight.normal,
                                       color: Colors.blueGrey,
@@ -118,7 +118,6 @@ class _PhoneNoState extends State<PhoneNo> {
                                   decoration: InputDecoration(
                                     border: const OutlineInputBorder(),
                                     hintText: localizations.hintText,
-                                    // prefix: Text( '+91 - ' ),
                                     prefixIcon: Container(
                                       padding: const EdgeInsets.all(10.0),
                                       child: InkWell(
@@ -156,7 +155,7 @@ class _PhoneNoState extends State<PhoneNo> {
                                   ), 
                                   child: Text(
                                     localizations.cButton,
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       color: Colors.white,
                                       fontWeight: FontWeight.bold,
                                       fontSize: 24,
@@ -195,7 +194,7 @@ class _PhoneNoState extends State<PhoneNo> {
       Navigator.pushReplacement(
           context, 
           MaterialPageRoute(
-            builder: (context) => CodeVerification(verificationId: verificationId,),
+            builder: (context) => CodeVerification(verificationId: verificationId, phone: _phoneController.text),
           )
        );
     };
@@ -212,7 +211,7 @@ class _PhoneNoState extends State<PhoneNo> {
     
     await _auth.verifyPhoneNumber(
       phoneNumber: phoneNumber,
-      timeout: Duration(seconds: 60),
+      timeout: const Duration(seconds: 60),
       verificationCompleted: verificationCompleted,
       verificationFailed: verificationFailed,
       codeSent: codeSent,

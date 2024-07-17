@@ -3,7 +3,6 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:liveasy_demo/page_1.dart';
-import 'package:liveasy_demo/page_4.dart';
 import 'firebase_options.dart';
 import 'locale_provider.dart';
 import 'package:provider/provider.dart';
@@ -16,7 +15,7 @@ void main() async {
   );
   runApp(
     ChangeNotifierProvider(
-      create: (context) => LocaleProvider(Locale('en')), // Default locale
+      create: (context) => LocaleProvider(const Locale('en')), 
       child: const LivEasy(),
     ),
   );
@@ -38,8 +37,8 @@ class LivEasy extends StatelessWidget {
           GlobalCupertinoLocalizations.delegate,
         ],
         supportedLocales: [
-          Locale('en', ''), // English
-          Locale('hi', ''), // Hindi
+          Locale('en', ''), 
+          Locale('hi', ''), 
         ],
         home: LanguagePage(),
       );

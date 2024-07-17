@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:liveasy_demo/page_2.dart';
 import 'package:liveasy_demo/page_4.dart';
 import 'package:pinput/pin_put/pin_put.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'locale_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:timer_count_down/timer_count_down.dart';
 
 
 class CodeVerification extends StatefulWidget {
   final String verificationId;
-  const CodeVerification({super.key,required this.verificationId});
+  final String phone;
+  const CodeVerification({super.key,required this.verificationId, required this.phone});
 
   @override
   State<CodeVerification> createState() => _CodeVerificationState();
@@ -20,6 +23,8 @@ class _CodeVerificationState extends State<CodeVerification> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final TextEditingController _otpController = TextEditingController();
 
+  bool _isButtonDisabled = true;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,7 +34,7 @@ class _CodeVerificationState extends State<CodeVerification> {
             ),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
-                return Center(child: CircularProgressIndicator());
+                return const Center(child: CircularProgressIndicator());
               } else if (snapshot.hasError) {
                 return Center(child: Text('Error: ${snapshot.error}'));
               } else {
@@ -67,15 +72,15 @@ class _CodeVerificationState extends State<CodeVerification> {
                                 const SizedBox(height: 30,),
                                 Text(
                                 localizations.verifyText,
-                                style: TextStyle(
+                                style: const TextStyle(
                                   fontSize: 24,
                                   fontWeight: FontWeight.w800,
                                 ),
                               ),
                               const SizedBox(height: 15),
                               Text(
-                                localizations.verifyInfo,
-                                style: TextStyle(
+                                '${localizations.verifyInfo} ${widget.phone}',
+                                style: const TextStyle(
                                   fontSize: 18,
                                   fontWeight: FontWeight.normal,
                                   color: Colors.blueGrey,
@@ -112,21 +117,38 @@ class _CodeVerificationState extends State<CodeVerification> {
                                   children: [
                                     Text(
                                       localizations.recodeOption,
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                         color: Color.fromARGB(255, 86, 86, 86),
-                                        fontSize: 18,
+                                        fontSize: 15,
                                       ),
                                     ),
                                     const SizedBox(width: 5,),
                                     TextButton(
-                                      onPressed: () {}, 
+                                      onPressed: _isButtonDisabled ? null : () {
+                                        Navigator.pushReplacement(
+                                          context,
+                                          MaterialPageRoute(builder: (context) => const PhoneNo()),
+                                        );
+                                      },
                                       child: Text(
                                         localizations.recodeButton,
                                         style: TextStyle(
-                                          color: Colors.black,
-                                          fontSize: 18,
+                                          color: _isButtonDisabled ? Colors.grey : Colors.black,
+                                          fontSize: 15,
                                         ),
                                       ),
+                                    ),
+                                    const SizedBox(width: 5,),
+                                    Countdown(
+                                      seconds: 60,
+                                      build: (BuildContext context, double time) => Text(time.toString()),
+                                      interval: const Duration(milliseconds: 100),
+                                      onFinished: () {
+                                        print('Timer is done!');
+                                        setState(() {
+                                          _isButtonDisabled = false;
+                                        });
+                                      },
                                     ),
                                   ],
                                 ),
@@ -147,11 +169,10 @@ class _CodeVerificationState extends State<CodeVerification> {
                                       borderRadius: BorderRadius.zero,
                                     ),
                                   ),
-                                  // padding: MaterialStateProperty.all(EdgeInsets.symmetric(vertical: 5))
                                 ), 
                                 child: Text(
                                   localizations.vcButton,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     color: Colors.white,
                                     fontWeight: FontWeight.bold,
                                     fontSize: 24,
@@ -186,92 +207,9 @@ class _CodeVerificationState extends State<CodeVerification> {
       );
     } catch (e) {
       print('Failed to sign in: $e');
-      print(_otpController.text);
     }
   }
 }
 
 
-class InputReciever extends StatefulWidget {
-  const InputReciever({super.key});
 
-  @override
-  State<InputReciever> createState() => _InputRecieverState();
-}
-
-class _InputRecieverState extends State<InputReciever> {
-
-  final FirebaseAuth _auth = FirebaseAuth.instance;
-  final TextEditingController _otpController = TextEditingController();
-  late String _verificationId;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        PinPut(
-          eachFieldWidth: 55.0, 
-          eachFieldHeight: 55.0, 
-          withCursor: true, 
-          fieldsCount: 6,
-          controller: _otpController,
-          eachFieldMargin: const EdgeInsets.symmetric(horizontal: 3), 
-          submittedFieldDecoration: BoxDecoration( 
-            color: const Color.fromARGB(255, 8, 89, 171), 
-            borderRadius: BorderRadius.circular(15.0), 
-          ),
-          selectedFieldDecoration: BoxDecoration( 
-            color: const Color.fromARGB(255, 8, 89, 171), 
-            borderRadius: BorderRadius.circular(15.0), 
-          ), 
-           followingFieldDecoration: BoxDecoration( 
-            color: const Color.fromARGB(255, 112, 200, 235), 
-            borderRadius: BorderRadius.circular(0), 
-          ),  
-           pinAnimationType: PinAnimationType.none, 
-          textStyle: const TextStyle(color: Colors.white, fontSize: 20.0, height: 1), 
-        ),
-        const SizedBox(height: 20,),
-        Center(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Text(
-                'Didn\'t recieve the code?',
-                style: TextStyle(
-                  color: Color.fromARGB(255, 86, 86, 86),
-                  fontSize: 18,
-                ),
-              ),
-              const SizedBox(width: 5,),
-              TextButton(
-                onPressed: () {}, 
-                child: const Text(
-                  'Request Again',
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 18,
-                  ),
-                ),
-              ),
-            ],
-          ),
-        )
-      ],
-    );
-  }
-
-  void _signInWithPhoneNumber() async {
-    try {
-      final AuthCredential credential = PhoneAuthProvider.credential(
-        verificationId: _verificationId, 
-        smsCode: _otpController.text,
-      );
-      final User? user = (await _auth.signInWithCredential(credential)).user;
-      print('Successfully signed in UID: ${user!.uid}');
-    } catch (e) {
-      print('Failed to sign in: $e');
-    }
-  }
-
-}

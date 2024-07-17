@@ -15,8 +15,8 @@ class LanguagePage extends StatelessWidget {
 
     return Scaffold(
       body: DecoratedBox(
-        decoration: BoxDecoration(
-          color: DesignDetails().ColorCombo(),
+        decoration: const BoxDecoration(
+          color: Color.fromARGB(255, 255, 255, 255),
         ),
         child: Stack(
           children: [
@@ -60,7 +60,7 @@ class LanguagePage extends StatelessWidget {
                   onPressed: () {
                     Navigator.push(
                       context, 
-                      MaterialPageRoute(builder: (context) => PhoneNo()),
+                      MaterialPageRoute(builder: (context) => const PhoneNo()),
                     );
                   },
                   style: ButtonStyle(
@@ -70,7 +70,6 @@ class LanguagePage extends StatelessWidget {
                         borderRadius: BorderRadius.zero,
                       ),
                     ),
-                    // padding: MaterialStateProperty.all(EdgeInsets.symmetric(vertical: 5))
                   ), 
                   child: Text(
                     localizations.button,
@@ -124,7 +123,6 @@ class LanguageDropdown extends StatefulWidget {
 
 class _LanguageDropdownState extends State<LanguageDropdown> {
 
-  // List<String> languages = [localizations.englishOption, 'Hindi'];
 
   @override
   Widget build(BuildContext context) {
@@ -204,33 +202,5 @@ class _LanguageDropdownState extends State<LanguageDropdown> {
         ),
       ),
     );
-  }
-}
-
-
-// class WaveClipper extends CustomClipper<Path> {
-//   @override
-//   Path getClip(Size size) {
-//     final path = Path();
-    
-//     path.moveTo(0.0, size.height * 0.25);
-//     path.quadraticBezierTo(size.width / 3, size.height * 0.5, size.width / 2, size.height * 0.25);
-//     path.quadraticBezierTo(2 * size.width / 3, size.height, size.width, size.height * 0.25);
-//     path.lineTo(size.width, size.height);
-//     path.lineTo(0.0, size.height);
-//     path.close();
-
-//     return path;
-//   }
-
-//   @override
-//   bool shouldReclip(CustomClipper<Path> oldClipper) => false;
-// }
-
-
-class DesignDetails {
-  Color ColorCombo() {
-    Color color = Color.fromARGB(255, 255, 255, 255);
-    return color;
   }
 }
