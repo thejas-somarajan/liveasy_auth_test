@@ -9,39 +9,37 @@ import 'package:provider/provider.dart';
 
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
+  WidgetsFlutterBinding.ensureInitialized(); 
   await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
+    options: DefaultFirebaseOptions.currentPlatform, 
   );
   runApp(
     ChangeNotifierProvider(
-      create: (context) => LocaleProvider(const Locale('en')), 
-      child: const LivEasy(),
+      create: (context) => LocaleProvider(const Locale('en')), // Provides the locale state to the app.
+      child: const LivEasy(), 
     ),
   );
 }
 
-
 class LivEasy extends StatelessWidget {
-  const LivEasy({super.key});
-
+  const LivEasy({super.key}); 
   @override
   Widget build(BuildContext context) {
     return Consumer(
-      builder: (context, localeProvider, child) {
+      builder: (context, localeProvider, child) { // Uses a Consumer to listen for changes in LocaleProvider.
         return const MaterialApp(
-        localizationsDelegates: [
-          AppLocalizations.delegate,
-          GlobalMaterialLocalizations.delegate,
-          GlobalWidgetsLocalizations.delegate,
-          GlobalCupertinoLocalizations.delegate,
-        ],
-        supportedLocales: [
-          Locale('en', ''), 
-          Locale('hi', ''), 
-        ],
-        home: LanguagePage(),
-      );
+          localizationsDelegates: [
+            AppLocalizations.delegate, // Delegate for app-specific localizations.
+            GlobalMaterialLocalizations.delegate, // Delegate for material localizations.
+            GlobalWidgetsLocalizations.delegate, // Delegate for widgets localizations.
+            GlobalCupertinoLocalizations.delegate, // Delegate for Cupertino localizations.
+          ],
+          supportedLocales: [
+            Locale('en', ''), // Supports English locale.
+            Locale('hi', ''), // Supports Hindi locale.
+          ],
+          home: LanguagePage(), 
+        );
       }
     );
   }

@@ -43,24 +43,24 @@ class _PhoneNoState extends State<PhoneNo> {
     e164Key: "",
   );
 
-  final FirebaseAuth _auth = FirebaseAuth.instance;
-  final TextEditingController _phoneController = TextEditingController();
-  late String _verificationId;
+  final FirebaseAuth _auth = FirebaseAuth.instance; // Instance of FirebaseAuth.
+  final TextEditingController _phoneController = TextEditingController(); // Controller for phone number input.
+  late String _verificationId; // Verification ID for phone authentication.
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
           body: FutureBuilder<AppLocalizations>(
             future: AppLocalizations.delegate.load(
-              Provider.of<LocaleProvider>(context, listen: false).locale,),
+              Provider.of<LocaleProvider>(context, listen: false).locale,
+              ), // Loads the localized strings based on the current locale.
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const Center(child: CircularProgressIndicator());
+                  return const Center(child: CircularProgressIndicator()); // Shows a loading indicator while waiting.
                 } else if (snapshot.hasError) {
-                  return Center(child: Text('Error: ${snapshot.error}'));
+                  return Center(child: Text('Error: ${snapshot.error}')); // Displays an error message if loading fails.
                 } else {
-                  final localizations = snapshot.data!;
+                  final localizations = snapshot.data!; // Gets the localized strings.
 
                   return DecoratedBox(
                     decoration: const BoxDecoration(
@@ -76,7 +76,7 @@ class _PhoneNoState extends State<PhoneNo> {
                                 side: BorderSide.none,
                               ),
                               onPressed: () {
-                                Navigator.pop(context);
+                                Navigator.pop(context); // Navigates back to the previous screen.
                               }, 
                               child: const Icon(
                                 Icons.cancel_outlined,
@@ -93,7 +93,7 @@ class _PhoneNoState extends State<PhoneNo> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                 Text(
-                                  localizations.phonenumberText,
+                                  localizations.phonenumberText, // Displays the localized phone number text.
                                   style: const TextStyle(
                                     fontSize: 23,
                                     fontWeight: FontWeight.w800,
@@ -103,7 +103,7 @@ class _PhoneNoState extends State<PhoneNo> {
                                 Container(
                                   padding: const EdgeInsets.symmetric(horizontal: 50),
                                   child:Text(
-                                    localizations.phonenumberInfo,
+                                    localizations.phonenumberInfo, // Displays the localized phone number info.
                                     style: const TextStyle(
                                       fontSize: 18,
                                       fontWeight: FontWeight.normal,
@@ -117,13 +117,13 @@ class _PhoneNoState extends State<PhoneNo> {
                                   keyboardType: TextInputType.phone,
                                   decoration: InputDecoration(
                                     border: const OutlineInputBorder(),
-                                    hintText: localizations.hintText,
+                                    hintText: localizations.hintText, // Displays the localized hint text
                                     prefixIcon: Container(
                                       padding: const EdgeInsets.all(10.0),
                                       child: InkWell(
                                         onTap: () {},
                                         child: Text(
-                                          "${country.flagEmoji} ${country.phoneCode} - ",
+                                          "${country.flagEmoji} ${country.phoneCode} - ", // Displays the country flag and phone code.
                                           style: const TextStyle(
                                             fontSize: 20,
                                           ),
@@ -131,7 +131,7 @@ class _PhoneNoState extends State<PhoneNo> {
                                       ),
                                     ),
                                   ),
-                                  controller: _phoneController,
+                                  controller: _phoneController, // Sets the controller for the phone number input.
                                   validator: validatePhoneNumber,
                                   style: const TextStyle(
                                     fontSize: 20,
@@ -143,7 +143,7 @@ class _PhoneNoState extends State<PhoneNo> {
                                   height: 70,
                                   child: ElevatedButton(
                                   onPressed: () {
-                                    _verifyPhoneNumber();
+                                    _verifyPhoneNumber(); // Calls the phone number verification function.
                                   },
                                   style: ButtonStyle(
                                     backgroundColor: MaterialStateProperty.all(const Color.fromARGB(255, 31, 59, 108)),

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'locale_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:timer_count_down/timer_count_down.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -13,7 +12,7 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends State<ProfilePage> {
 
-  int _selectedProfile = 0;
+  int _selectedProfile = 0; // Variable to track selected profile option.
 
   @override
   Widget build(BuildContext context) {
@@ -24,25 +23,25 @@ class _ProfilePageState extends State<ProfilePage> {
             ),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
-                return Center(child: CircularProgressIndicator());
+                return const Center(child: CircularProgressIndicator());
               } else if (snapshot.hasError) {
                 return Center(child: Text('Error: ${snapshot.error}'));
               } else {
-                final localizations = snapshot.data!;
+                final localizations = snapshot.data!; // Gets localized strings.
 
                 return DecoratedBox(
                   decoration: const BoxDecoration(
                     color: Colors.white,
                   ),
                   child: Container(
-                    padding: EdgeInsets.all(20),
+                    padding: const EdgeInsets.all(20),
                     child: Center(
                       child: Column(
                         children: [
                           const SizedBox(height: 100,),
                           Text(
                             localizations.profileText,
-                            style: TextStyle(
+                            style: const TextStyle(
                             fontSize: 24,
                             fontWeight: FontWeight.w800,
                             ),
@@ -58,13 +57,13 @@ class _ProfilePageState extends State<ProfilePage> {
                             child: RadioListTile<int>(
                                 title:Row(
                                   children: [
-                                    Icon(Icons.warehouse_outlined, size: 50),
-                                    SizedBox(width: 20),
+                                    const Icon(Icons.warehouse_outlined, size: 50),
+                                    const SizedBox(width: 20),
                                     Column(
                                       crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
-                                        Text(localizations.shipperButton, style: TextStyle(fontSize: 25)),
-                                        Text(
+                                        Text(localizations.shipperButton, style: const TextStyle(fontSize: 25)),
+                                        const Text(
                                           'Lorem ipsum dolor sit amet,\nconsectetur adipiscing',
                                           style: TextStyle(fontSize: 13),
                                         ),
@@ -74,12 +73,12 @@ class _ProfilePageState extends State<ProfilePage> {
                                 ),
                                 value: 0,
                                 groupValue: _selectedProfile,
-                                onChanged: (value) => setState(() => _selectedProfile = value!),
+                                onChanged: (value) => setState(() => _selectedProfile = value!), // Updates selected profile.
                               ),
                           ),
                             const SizedBox(height: 50,),
                             Container(
-                              padding:  EdgeInsets.all(10),
+                              padding:  const EdgeInsets.all(10),
                               decoration: BoxDecoration(
                                 border: Border.all(
                                   width: 2.0,
@@ -88,13 +87,13 @@ class _ProfilePageState extends State<ProfilePage> {
                               child: RadioListTile<int>(
                                 title:  Row(
                                   children: [
-                                    Icon(Icons.fire_truck_outlined, size: 50),
-                                    SizedBox(width: 20),
+                                    const Icon(Icons.fire_truck_outlined, size: 50),
+                                    const SizedBox(width: 20),
                                     Column(
                                       crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
-                                        Text(localizations.transporterButton, style: TextStyle(fontSize: 25)),
-                                        Text(
+                                        Text(localizations.transporterButton, style: const TextStyle(fontSize: 25)),
+                                        const Text(
                                           'Lorem ipsum dolor sit amet,\nconsectetur adipiscing',
                                           style: TextStyle(
                                             fontSize: 12,
@@ -106,13 +105,13 @@ class _ProfilePageState extends State<ProfilePage> {
                                 ),
                                 value: 1,
                                 groupValue: _selectedProfile,
-                                onChanged: (value) => setState(() => _selectedProfile = value!),
+                                onChanged: (value) => setState(() => _selectedProfile = value!), // Updates selected profile.
                               ),
                             ),
                             const SizedBox(height: 50,),
                             Container(
                               height: 70,
-                              width: 500,
+                              width: 400,
                               child: ElevatedButton(
                                   onPressed: () {
                                     Navigator.push(
@@ -130,7 +129,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                   ), 
                                   child: Text(
                                     localizations.cButton,
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       color: Colors.white,
                                       fontWeight: FontWeight.bold,
                                       fontSize: 24,
@@ -138,17 +137,6 @@ class _ProfilePageState extends State<ProfilePage> {
                                   ),
                               ),
                             ),
-                            Countdown(
-                                      seconds: 60,
-                                      build: (BuildContext context, double time) => Text(time.toString()),
-                                      interval: const Duration(milliseconds: 100),
-                                      onFinished: () {
-                                        print('Timer is done!');
-                                        setState(() {
-                                          // _isButtonDisabled = false;
-                                        });
-                                      },
-                                    ),
                         ],
                       ),
                     ),

@@ -21,7 +21,7 @@ class CodeVerification extends StatefulWidget {
 class _CodeVerificationState extends State<CodeVerification> {
 
   final FirebaseAuth _auth = FirebaseAuth.instance;
-  final TextEditingController _otpController = TextEditingController();
+  final TextEditingController _otpController = TextEditingController(); // Controller for OTP input.
 
   bool _isButtonDisabled = true;
 
@@ -34,9 +34,9 @@ class _CodeVerificationState extends State<CodeVerification> {
             ),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
-                return const Center(child: CircularProgressIndicator());
+                return const Center(child: CircularProgressIndicator()); // Shows loading indicator while waiting.
               } else if (snapshot.hasError) {
-                return Center(child: Text('Error: ${snapshot.error}'));
+                return Center(child: Text('Error: ${snapshot.error}')); // Displays error message if loading fails.
               } else {
                 final localizations = snapshot.data!;
 
@@ -54,7 +54,7 @@ class _CodeVerificationState extends State<CodeVerification> {
                               side: BorderSide.none,
                             ),
                             onPressed: () {
-                              Navigator.pop(context);
+                              Navigator.pop(context); // Navigates back to previous screen.
                             }, 
                             child: const Icon(
                               Icons.arrow_back,
@@ -79,7 +79,7 @@ class _CodeVerificationState extends State<CodeVerification> {
                               ),
                               const SizedBox(height: 15),
                               Text(
-                                '${localizations.verifyInfo} ${widget.phone}',
+                                '${localizations.verifyInfo} ${widget.phone}',  // Displays localized verification info with phone number.
                                 style: const TextStyle(
                                   fontSize: 18,
                                   fontWeight: FontWeight.normal,
@@ -127,7 +127,7 @@ class _CodeVerificationState extends State<CodeVerification> {
                                       onPressed: _isButtonDisabled ? null : () {
                                         Navigator.pushReplacement(
                                           context,
-                                          MaterialPageRoute(builder: (context) => const PhoneNo()),
+                                          MaterialPageRoute(builder: (context) => const PhoneNo()), // Navigates to PhoneNo screen.
                                         );
                                       },
                                       child: Text(
@@ -141,12 +141,12 @@ class _CodeVerificationState extends State<CodeVerification> {
                                     const SizedBox(width: 5,),
                                     Countdown(
                                       seconds: 60,
-                                      build: (BuildContext context, double time) => Text(time.toString()),
+                                      build: (BuildContext context, double time) => Text(time.toString()), // Displays countdown timer.
                                       interval: const Duration(milliseconds: 100),
                                       onFinished: () {
                                         print('Timer is done!');
                                         setState(() {
-                                          _isButtonDisabled = false;
+                                          _isButtonDisabled = false; // Enables resend button after timer finishes.
                                         });
                                       },
                                     ),
@@ -160,7 +160,7 @@ class _CodeVerificationState extends State<CodeVerification> {
                                 padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 10),
                                 child: ElevatedButton(
                                 onPressed: () {
-                                  _signInWithPhoneNumber();
+                                  _signInWithPhoneNumber(); // Calls function to sign in with phone number.
                                 },
                                 style: ButtonStyle(
                                   backgroundColor: MaterialStateProperty.all(const Color.fromARGB(255, 23, 46, 85)),
@@ -199,11 +199,11 @@ class _CodeVerificationState extends State<CodeVerification> {
         verificationId: widget.verificationId, 
         smsCode: _otpController.text,
       );
-      final User? user = (await _auth.signInWithCredential(credential)).user;
+      final User? user = (await _auth.signInWithCredential(credential)).user; // Signs in user with credential.
       print('Successfully signed in UID: ${user!.uid}');
       Navigator.pushReplacement(
           context, 
-          MaterialPageRoute(builder: (context) => const ProfilePage()),
+          MaterialPageRoute(builder: (context) => const ProfilePage()), // Signs in user with credential.
       );
     } catch (e) {
       print('Failed to sign in: $e');
