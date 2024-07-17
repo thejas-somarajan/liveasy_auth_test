@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:liveasy_demo/page_1.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:liveasy_demo/page_1.dart';
 import 'package:liveasy_demo/page_4.dart';
-import 'package:liveasy_demo/phone_authentication/home.dart';
-import 'package:liveasy_demo/phone_authentication/main_1.dart';
 import 'firebase_options.dart';
+import 'locale_provider.dart';
+import 'package:provider/provider.dart';
 
 
 void main() async {
@@ -14,7 +14,12 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  runApp(const LivEasy());
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) => LocaleProvider(Locale('en')), // Default locale
+      child: const LivEasy(),
+    ),
+  );
 }
 
 
@@ -23,18 +28,22 @@ class LivEasy extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      localizationsDelegates: [
-        AppLocalizations.delegate,
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-      ],
-      supportedLocales: [
-        Locale('en', ''), // English
-        Locale('hi', ''), // Hindi
-      ],
-      home: ProfilePage(),
+    return Consumer(
+      builder: (context, localeProvider, child) {
+        return const MaterialApp(
+        localizationsDelegates: [
+          AppLocalizations.delegate,
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+        ],
+        supportedLocales: [
+          Locale('en', ''), // English
+          Locale('hi', ''), // Hindi
+        ],
+        home: LanguagePage(),
+      );
+      }
     );
   }
 }

@@ -2,6 +2,10 @@ import 'package:country_picker/country_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:liveasy_demo/page_3.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'locale_provider.dart';
+import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 
 
 class PhoneNo extends StatefulWidget {
@@ -45,117 +49,132 @@ class _PhoneNoState extends State<PhoneNo> {
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
-      body: DecoratedBox(
-        decoration: const BoxDecoration(
-          color: Colors.white,
-        ),
-          child: Column(
-            children: [
-              const SizedBox(height: 50),
-              Align(
-                alignment: Alignment.topLeft,
-                child: OutlinedButton(
-                  style: OutlinedButton.styleFrom(
-                    side: BorderSide.none,
-                  ),
-                  onPressed: () {
-                    Navigator.pop(context);
-                  }, 
-                  child: const Icon(
-                    Icons.cancel_outlined,
-                    size: 30,
-                    color: Colors.black,
-                  ),
-                ),
-              ),
-              const SizedBox(height: 50,),
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                    const Text(
-                      "Please enter your mobile number",
-                      style: TextStyle(
-                        fontSize: 23,
-                        fontWeight: FontWeight.w800,
-                      ),
+          body: FutureBuilder<AppLocalizations>(
+            future: AppLocalizations.delegate.load(
+              Provider.of<LocaleProvider>(context, listen: false).locale,),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return Center(child: CircularProgressIndicator());
+                } else if (snapshot.hasError) {
+                  return Center(child: Text('Error: ${snapshot.error}'));
+                } else {
+                  final localizations = snapshot.data!;
+
+                  return DecoratedBox(
+                    decoration: const BoxDecoration(
+                      color: Colors.white,
                     ),
-                    const SizedBox(height: 10),
-                    Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 50),
-                      child: const Text(
-                        'You ll recieve a 6 digit code to verify next',
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.normal,
-                          color: Colors.blueGrey,
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-                    const SizedBox(height: 20),
-                    TextFormField(
-                      keyboardType: TextInputType.phone,
-                      decoration: InputDecoration(
-                        border: const OutlineInputBorder(),
-                        hintText: 'Mobile Number',
-                        // prefix: Text( '+91 - ' ),
-                        prefixIcon: Container(
-                          padding: const EdgeInsets.all(10.0),
-                          child: InkWell(
-                            onTap: () {},
-                            child: Text(
-                              "${country.flagEmoji} ${country.phoneCode} - ",
-                              style: const TextStyle(
-                                fontSize: 20,
+                      child: Column(
+                        children: [
+                          const SizedBox(height: 50),
+                          Align(
+                            alignment: Alignment.topLeft,
+                            child: OutlinedButton(
+                              style: OutlinedButton.styleFrom(
+                                side: BorderSide.none,
                               ),
+                              onPressed: () {
+                                Navigator.pop(context);
+                              }, 
+                              child: const Icon(
+                                Icons.cancel_outlined,
+                                size: 30,
+                                color: Colors.black,
                               ),
+                            ),
                           ),
-                        ),
-                      ),
-                      controller: _phoneController,
-                      validator: validatePhoneNumber,
-                      style: const TextStyle(
-                        fontSize: 20,
-                      ),
-                    ),
-                    const SizedBox(height: 25,),
-                    SizedBox(
-                      width: 700,
-                      height: 70,
-                      child: ElevatedButton(
-                      onPressed: () {
-                        _verifyPhoneNumber();
-                      },
-                      style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all(const Color.fromARGB(255, 31, 59, 108)),
-                        shape: MaterialStateProperty.all(
-                          const RoundedRectangleBorder(
-                            borderRadius: BorderRadius.zero,
+                          const SizedBox(height: 50,),
+                          Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 20),
+                            child: Center(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                Text(
+                                  localizations.phonenumberText,
+                                  style: TextStyle(
+                                    fontSize: 23,
+                                    fontWeight: FontWeight.w800,
+                                  ),
+                                ),
+                                const SizedBox(height: 10),
+                                Container(
+                                  padding: const EdgeInsets.symmetric(horizontal: 50),
+                                  child:Text(
+                                    localizations.phonenumberInfo,
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.normal,
+                                      color: Colors.blueGrey,
+                                    ),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ),
+                                const SizedBox(height: 20),
+                                TextFormField(
+                                  keyboardType: TextInputType.phone,
+                                  decoration: InputDecoration(
+                                    border: const OutlineInputBorder(),
+                                    hintText: localizations.hintText,
+                                    // prefix: Text( '+91 - ' ),
+                                    prefixIcon: Container(
+                                      padding: const EdgeInsets.all(10.0),
+                                      child: InkWell(
+                                        onTap: () {},
+                                        child: Text(
+                                          "${country.flagEmoji} ${country.phoneCode} - ",
+                                          style: const TextStyle(
+                                            fontSize: 20,
+                                          ),
+                                          ),
+                                      ),
+                                    ),
+                                  ),
+                                  controller: _phoneController,
+                                  validator: validatePhoneNumber,
+                                  style: const TextStyle(
+                                    fontSize: 20,
+                                  ),
+                                ),
+                                const SizedBox(height: 25,),
+                                SizedBox(
+                                  width: 700,
+                                  height: 70,
+                                  child: ElevatedButton(
+                                  onPressed: () {
+                                    _verifyPhoneNumber();
+                                  },
+                                  style: ButtonStyle(
+                                    backgroundColor: MaterialStateProperty.all(const Color.fromARGB(255, 31, 59, 108)),
+                                    shape: MaterialStateProperty.all(
+                                      const RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.zero,
+                                      ),
+                                    ),
+                                  ), 
+                                  child: Text(
+                                    localizations.cButton,
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 24,
+                                    ),
+                                  ),
+                                  ),
+                                ),
+                                ]
+                              ),
+                            ),
                           ),
-                        ),
-                      ), 
-                      child: const Text(
-                        'CONTINUE',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 24,
-                        ),
+                        ],
                       ),
-                      ),
-                    ),
-                    ]
-                  ),
-                ),
-              ),
-            ],
+                  );
+                }
+              },
           ),
-      ), 
-    );
+        );
   }
 
   void _verifyPhoneNumber() async {

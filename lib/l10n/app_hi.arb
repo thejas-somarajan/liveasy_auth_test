@@ -9,5 +9,13 @@
   "phonenumberText": "कृपया अपना मोबाइल नंबर दर्ज करें",
   "phonenumberInfo": "आपको सत्यापन के लिए 6 अंकों का कोड प्राप्त होगा",
   "hintText": "मोबाइल नंबर",
-  "cButton": "जारी रखें"
+  "cButton": "जारी रखें",
+  "verifyText": "फ़ोन सत्यापित करें",
+  "verifyInfo": "कोड भेजा गया है",
+  "recodeOption": "कोड प्राप्त नहीं हुआ?",
+  "recodeButton": "फिर से अनुरोध करें",
+  "vcButton": "सत्यापित करें और जारी रखें",
+  "profileText": "कृपया अपनी प्रोफ़ाइल चुनें",
+  "shipperButton": "शिपर",
+  "transporterButton": "परिवहनकर्ता"
 }

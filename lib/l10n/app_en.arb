@@ -8,5 +8,13 @@
     "phonenumberText" : "Please enter your mobile number",
     "phonenumberInfo" : "You ll recieve a 6 digit code to verify next",
     "hintText" : "Mobile Number",
-    "cButton" : "CONTINUE"
+    "cButton" : "CONTINUE",
+    "verifyText" : "Verify Phone",
+    "verifyInfo" : "Code is sent to",
+    "recodeOption" : "Didn't recieve the code?",
+    "recodeButton" : "Request Again",
+    "vcButton" : "VERIFY AND CONTINUE",
+    "profileText": "Please select your profile",
+    "shipperButton": "Shipper",
+    "transporterButton" : "Transporter"
 }

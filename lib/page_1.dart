@@ -2,13 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:liveasy_demo/page_2.dart';
-
+import 'locale_provider.dart';
+import 'package:provider/provider.dart';
 
 class LanguagePage extends StatelessWidget {
   const LanguagePage({super.key});
 
   @override
   Widget build(BuildContext context) {
+
     final localizations = AppLocalizations.of(context)!;
 
     return Scaffold(
@@ -126,8 +128,12 @@ class _LanguageDropdownState extends State<LanguageDropdown> {
 
   @override
   Widget build(BuildContext context) {
+
     final localizations = AppLocalizations.of(context)!;
     String dropdownvalue = localizations.option;
+    final localeProvider = Provider.of<LocaleProvider>(context);
+
+
     List<String> languages = [localizations.englishOption, localizations.hindiOption];
 
 
@@ -179,6 +185,7 @@ class _LanguageDropdownState extends State<LanguageDropdown> {
               newLocale = const Locale('hi');
             }
             _changeLocale(context, newLocale);
+            localeProvider.setLocale(newLocale);
             setState(() {
               dropdownvalue = newValue!;
           });
