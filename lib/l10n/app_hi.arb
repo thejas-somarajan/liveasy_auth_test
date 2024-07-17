@@ -1,0 +1,13 @@
+{
+  "@@locale": "hi",
+  "languageText": "कृपया अपनी भाषा चुनें",
+  "languageInfo": "आप किसी भी समय भाषा बदल सकते हैं",
+  "option": "हिंदी",
+  "englishOption": "English",
+  "hindiOption": "हिंदी",
+  "button": "अगला",
+  "phonenumberText": "कृपया अपना मोबाइल नंबर दर्ज करें",
+  "phonenumberInfo": "आपको सत्यापन के लिए 6 अंकों का कोड प्राप्त होगा",
+  "hintText": "मोबाइल नंबर",
+  "cButton": "जारी रखें"
+}

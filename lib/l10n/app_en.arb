@@ -1,0 +1,12 @@
+{
+    "languageText" : "Please select your Language",
+    "languageInfo" : "You can change the language at any time",
+    "option" : "English",
+    "englishOption" : "English",
+    "hindiOption": "हिंदी",
+    "button" : "NEXT",
+    "phonenumberText" : "Please enter your mobile number",
+    "phonenumberInfo" : "You ll recieve a 6 digit code to verify next",
+    "hintText" : "Mobile Number",
+    "cButton" : "CONTINUE"
+}
