@@ -25,5 +25,4 @@ Users select their profile type (Shipper or Transporter) with relevant informati
 
 ###Concerns
 Emulator: Pixel 6 Pro
-Firebase app removed after submission from firebase console for security purposes
 
